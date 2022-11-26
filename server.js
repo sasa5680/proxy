@@ -2,22 +2,21 @@ var ogs = require("open-graph-scraper");
 var express = require("express");
 var app = express();
 
-app.all("/", function (req, res, next) {
+app.all("/api", function (req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Headers", "X-Requested-With");
   next();
 });
 
-
-app.get("/:url", function (req, res) {
-  if (req.params.url) {
-    var siteUrl = req.params.url;
+app.get("/api", function (req, res) {
+  if (req.query["url"]) {
+    var siteUrl = req.query["url"];
     var options = {
       url: siteUrl,
       headers: {
         "accept-language": "en",
       },
-      timeout: 4000,
+      timeout: 6000,
     };
 
     ogs(options, function (err, results, response) {
@@ -28,8 +27,6 @@ app.get("/:url", function (req, res) {
         res.end();
       }
     });
-  } else {
-    res.send("proxy server for link preview");
   }
 });
 
