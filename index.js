@@ -8,9 +8,10 @@ app.all("/", function (req, res, next) {
   next();
 });
 
-app.get("/", function (req, res) {
-  if (req.query["url"]) {
-    var siteUrl = req.query["url"];
+
+app.get("/:url", function (req, res) {
+  if (req.params.url) {
+    var siteUrl = req.params.url;
     var options = {
       url: siteUrl,
       headers: {
@@ -27,6 +28,8 @@ app.get("/", function (req, res) {
         res.end();
       }
     });
+  } else {
+    res.send("proxy server for link preview");
   }
 });
 
