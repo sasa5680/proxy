@@ -21,7 +21,9 @@ app.get("/api", function (req, res) {
 
     ogs(options, function (err, results, response) {
       if (results.err) {
-        res.json(results.err);
+      return res.status(400).send({
+        message: "This is an error!",
+      });
       } else {
         res.json(results);
         res.end();
